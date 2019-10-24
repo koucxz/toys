@@ -9,6 +9,9 @@
 - []call & apply
 - []bind
 - []extends
-- []curry func
+- []currying
 - []deep clone
 - []drag and drop
+- []array methods
+- []sort algorithm
+- []tree algorithm
