@@ -1,11 +1,12 @@
-export function isFunction (obj) {
+function isFunction (obj) {
   return typeof obj === 'function'
 }
 
-export function isThenable (obj) {
-  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function'
+function isThenable (obj) {
+  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && 'then' in obj
 }
 
-export function isPromise (obj) {
-  return isThenable(obj) && typeof obj.catch === 'function'
+module.exports = {
+  isFunction,
+  isThenable
 }

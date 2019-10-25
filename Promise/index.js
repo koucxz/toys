@@ -1,14 +1,12 @@
-import { isFunction, isThenable, isPromise } from "./util"
+const { isFunction, isThenable } = require('./util')
+
+function isPromise (obj) {
+  return obj instanceof Promise
+}
 
 const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
-
-const transition = (promise, state, result) => {
-  if (promise.state !== PENDING) return
-  promise.state = state
-  promise.result = result
-}
 
 const handleCallback = (callback, state, result) => {
   const { onFulfilled, onRejected, resolve, reject } = callback
@@ -23,9 +21,20 @@ const handleCallback = (callback, state, result) => {
   }
 }
 
+const handleCallbacks = (callbacks, state, result) => {
+  while (callbacks.length) handleCallback(callbacks.shift(), state, result)
+}
+
+const transition = (promise, state, result) => {
+  if (promise.state !== PENDING) return
+  promise.state = state
+  promise.result = result
+  setTimeout(() => handleCallbacks(promise.callbacks, state, result), 0)
+}
+
 const resolvePromise = (promise, result, resolve, reject) => {
   if (result === promise) {
-    const reason = new TypeError('Can not fulfill promise with itself')
+    const reason = new TypeError('Can not fufill promise with itself')
     return reject(reason)
   }
 
@@ -43,6 +52,8 @@ const resolvePromise = (promise, result, resolve, reject) => {
       return reject(err)
     }
   }
+
+  resolve(result)
 }
 
 function Promise (f) {
@@ -54,14 +65,14 @@ function Promise (f) {
   const onRejected = (reason) => transition(this, REJECTED, reason)
 
   let ignore = false
-  const resolve = (value)  => {
+  const resolve = (value) => {
     if (ignore) return
     ignore = true
     resolvePromise(this, value, onFulfilled, onRejected)
   }
   const reject = (reason) => {
     if (ignore) return
-    ig = true
+    ignore = true
     onRejected(reason)
   }
 
@@ -72,7 +83,7 @@ function Promise (f) {
   }
 }
 
-Promise.prototype.then = (onFulfilled, onRejected) => {
+Promise.prototype.then = function (onFulfilled, onRejected) {
   return new Promise((resolve, reject) => {
     const callback = { onFulfilled, onRejected, resolve, reject }
 
@@ -89,6 +100,39 @@ Promise.prototype.catch = function (onRejected) {
 }
 
 Promise.resolve = (value) => new Promise(resolve => resolve(value))
-Promise.reject = reason => newPromise((_, reject) => reject(reason))
+Promise.reject = (reason) => new Promise((_, reject) => reject(reason))
 
-window.Promise = Promise
+Promise.all = (promises) => new Promise((resolve, reject) => {
+  let settledCount = 0
+  const num = promises.length
+  let results = Array.from({length: num})
+  promises.forEach((promise, index) => {
+    Promise.resolve(promise).then(result => {
+      settledCount++
+      results[index] = result
+      if (settledCount === num) {
+        return resolve(results)
+      }
+    }, reason => reject(reason))
+  })
+})
+Promise.race = (promises) => new Promise((resolve) => {
+  promises.forEach(resolve)
+})
+
+Promise.try = (fn) => new Promise(() => fn)
+
+Promise.prototype.finally = function (callback) {
+  return this.then(
+    value  => Promise.resolve(callback()).then(() => value),
+    reason => Promise.resolve(callback()).then(() => { throw reason })
+  )
+}
+
+// if (window) {
+//   window.Promise = Promise
+// }
+
+if ('exports' in module) {
+  module.exports = Promise
+}
