@@ -4,8 +4,8 @@
 
 # todo
 
-- []Promise
-- []new
+- [x]Promise
+- [x]new
 - []call & apply
 - []bind
 - []extends
