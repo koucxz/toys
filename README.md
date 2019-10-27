@@ -6,8 +6,8 @@
 
 - [x] Promise
 - [x] new
-- [ ] call & apply
-- [ ] bind
+- [x] call & apply
+- [x] bind
 - [ ] extends
 - [ ] currying
 - [ ] deep clone
