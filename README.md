@@ -4,14 +4,14 @@
 
 # todo
 
-- []Promise
-- []new
-- []call & apply
-- []bind
-- []extends
-- []currying
-- []deep clone
-- []drag and drop
-- []array methods
-- []sort algorithm
-- []tree algorithm
+- [x] Promise
+- [x] new
+- [ ] call & apply
+- [ ] bind
+- [ ] extends
+- [ ] currying
+- [ ] deep clone
+- [ ] drag and drop
+- [ ] array methods
+- [ ] sort algorithm
+- [ ] tree algorithm
