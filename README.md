@@ -11,7 +11,7 @@
 - [x] extends
 - [x] currying
 - [x] deep clone
-- [ ] drag and drop
-- [ ] array methods
+- [x] drag and drop
+- [x] array methods
 - [ ] sort algorithm
 - [ ] tree algorithm
