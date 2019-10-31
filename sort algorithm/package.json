@@ -1,0 +1,11 @@
+{
+  "name": "sort-test",
+  "version": "1.0.0",
+  "description": "test kit",
+  "main": "test.mjs",
+  "scripts": {
+    "test": "node --experimental-modules test.mjs"
+  },
+  "author": "",
+  "license": "ISC"
+}
