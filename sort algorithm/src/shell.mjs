@@ -4,6 +4,7 @@ export function shellSort (arr) {
   checkArray(arr)
   if (arr.length < 2) return arr
   
+  console.time("shellSort耗时")
   let d = Math.floor(arr.length / 2)
   while (d >= 1) {
     for (let i = d; i < arr.length; i++) {
@@ -20,6 +21,7 @@ export function shellSort (arr) {
 
     d = Math.floor(d/2)
   }
+  console.timeEnd("shellSort耗时")
 
   return arr
 }
