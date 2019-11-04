@@ -4,6 +4,8 @@ import { insertSort } from "./src/insert"
 import { shellSort } from "./src/shell"
 import { selectSort } from "./src/select"
 import { heapSort } from "./src/heap"
+import { mergeSort } from "./src/merge"
+import { countSort } from "./src/count"
 
 const len = 1e4
 let arr = Array.from({length: len}, () => parseInt(Math.random() * len))
@@ -16,5 +18,7 @@ insertSort(arr.slice())
 shellSort(arr.slice())
 selectSort(arr.slice())
 heapSort(arr.slice())
+mergeSort(arr.slice())
+countSort(arr.slice())
 
 // console.log("排序结果:", result.join(","))
