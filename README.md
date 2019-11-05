@@ -13,5 +13,5 @@
 - [x] deep clone
 - [x] drag and drop
 - [x] array methods
-- [ ] sort algorithm
-- [ ] tree algorithm
+- [x] sort algorithm
+- <del>[ ] tree algorithm</del>
