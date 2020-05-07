@@ -1,4 +1,4 @@
-import { checkArray, swap } from "../utils"
+import { checkArray, swap } from "../utils/index.mjs"
 
 export function heapSort (arr) {
   checkArray(arr)

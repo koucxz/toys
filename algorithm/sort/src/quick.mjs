@@ -1,4 +1,4 @@
-import { checkArray, swap } from "../utils"
+import { checkArray, swap } from "../utils/index.mjs"
 
 function _partition (arr, left, right) {
   let pivot = arr[left]

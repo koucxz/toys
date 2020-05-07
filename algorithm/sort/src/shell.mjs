@@ -1,4 +1,4 @@
-import { checkArray } from "../utils"
+import { checkArray } from "../utils/index.mjs"
 
 export function shellSort (arr) {
   checkArray(arr)
