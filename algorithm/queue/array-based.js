@@ -1,19 +1,23 @@
-class Stack {
+class Queue {
   value = []
   constructor () {
     this.value = [...arguments]
   }
 
-  push (el) {
+  enqueue (el) {
     this.value.push(el)
   }
 
-  pop () {
-    return this.value.pop()
+  dequeue () {
+    return this.value.shift()
   }
 
-  // 获取栈顶元素, 不修改栈
-  peek () {
+  // 获取队列首个元素
+  front () {
+    return this.value[0]
+  }
+  // 获取队列最后一个元素
+  back () {
     return this.value[this.value.length - 1]
   }
 
@@ -33,4 +37,4 @@ class Stack {
   }
 }
 
-module.exports = Stack
+module.exports = Queue
