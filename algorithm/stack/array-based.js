@@ -26,7 +26,7 @@ class Stack {
   }
 
   toString () {
-    return this.value.toString()
+    return this.value.join('')
   }
 }
 
