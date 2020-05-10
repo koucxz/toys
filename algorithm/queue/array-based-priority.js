@@ -20,7 +20,7 @@ class PriorityQueue extends Queue {
     const queueEl = new PriorityQueue.PriorityEl(el, priority)
     if (this.isEmpty()) {
       this.value.push(queueEl)
-    } else { // 将当前元素插入到比它优先级大的元素前
+    } else { // 将当前元素插入到比它优先级低(优先级数值大)的元素前
       let added = false
       for (let i = 0, len = this.size(); i < len; i++) {
         if (queueEl.priority < this.value[i].priority) {

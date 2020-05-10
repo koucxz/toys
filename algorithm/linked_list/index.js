@@ -3,12 +3,11 @@ class LinkedList {
   length = 0
 
   static Node = class Node {
-    next = null
     data = null
+    next = null
 
-    constructor (data, next = null) {
+    constructor (data) {
       this.data = data
-      this.next = next
     }
   }
 
