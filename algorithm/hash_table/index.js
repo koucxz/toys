@@ -1,10 +1,10 @@
-// TODO 扩容
+const defaultLength = 7
 
 class HashTable {
   table = []
   count = 0
 
-  constructor (length = 137) {
+  constructor (length = defaultLength) {
     _getPrime(length)
     this.table = new Array(length)
   }
@@ -19,6 +19,7 @@ class HashTable {
     
     if (!bucket) {
       bucket = []
+      this.table[pos] = bucket
     }
 
     for (let i = 0; i < bucket.length; i++) {
@@ -31,6 +32,12 @@ class HashTable {
 
     bucket.push([key, value])
     this.count++
+
+    // 扩容
+    if (this.size() > this.table.length * 0.75){
+      let newSize = this.table.length * 2
+      this.resize(newSize)
+    }
   }
   // 别名
   set = this.put
@@ -66,6 +73,13 @@ class HashTable {
       if (item[0] === key) {
         bucket.splice(i,1)
         this.count--
+
+        // 缩容
+        if (this.table.length > defaultLength && this.size() < this.table.length * 0.25) {
+          let newSize = Math.floor(this.table.length / 2)
+          this.resize(newSize)
+        }
+
         return item[1]
       }
     }
@@ -103,6 +117,28 @@ class HashTable {
       total += this.table.length - 1;
     }
     return Math.round(total);
+  }
+
+  // 扩容操作
+  resize (size) {
+    size = _getPrime(size)
+    let oldTable = this.table
+
+    this.table = new Array(size)
+    this.count = 0
+
+    for (let i = 0; i < oldTable.length; i++) {
+      const bucket = oldTable[i];
+
+      if (!bucket) {
+        continue
+      }      
+
+      for (let j = 0; j < bucket.length; j++) {
+        const item = bucket[j];
+        this.put(item[0], item[1])//插入数据的key和value
+      }
+    }
   }
 }
 
