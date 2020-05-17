@@ -1,46 +1,128 @@
+// TODO 扩容
+
 class HashTable {
-  table = new Array(137)
+  table = []
+  count = 0
 
-  constructor () {
+  constructor (length = 137) {
+    _getPrime(length)
+    this.table = new Array(length)
   }
 
-  // get () {
+  /** 插入/修改
+   * @param {String} key
+   * @param {any} value
+   */
+  put (key, value) {
+    const pos = this.hashing(key);
+    let bucket = this.table[pos]
     
-  // }
-
-  put (data) {
-    var pos = this.betterHash(data);
-    this.table[pos] = data;
-  }
-
-  simpleHash (string) {
-    let total = 0;
-    for (let i = 0; i < string.length; i++) {
-      total += string.charCodeAt(i);
+    if (!bucket) {
+      bucket = []
     }
-    return total % this.table.length;
+
+    for (let i = 0; i < bucket.length; i++) {
+      let item = bucket[i]
+      if (item[0] === key) {
+        item[1] = value
+        return
+      }
+    }
+
+    bucket.push([key, value])
+    this.count++
+  }
+  // 别名
+  set = this.put
+
+  get (key) {
+    const pos = this.hashing(key);
+    const bucket = this.table[pos]
+
+    if (!bucket) {
+      return
+    }
+
+    for (let i = 0; i < bucket.length; i++) {
+      let item = bucket[i]
+      if (item[0] === key) {
+        return item[1]
+      }
+    }
+
+    return
   }
 
-  betterHash (string) {
-    const H = 31;
+  remove (key) {
+    const pos = this.hashing(key);
+    let bucket = this.table[pos]
+
+    if (!bucket) {
+      return
+    }
+
+    for (let i = 0; i < bucket.length; i++) {
+      let item = bucket[i]
+      if (item[0] === key) {
+        bucket.splice(i,1)
+        this.count--
+        return item[1]
+      }
+    }
+
+    return
+  }
+
+  isEmpty () {
+    return this.count === 0
+  }
+
+  size () {
+    return this.count
+  }
+
+  showDistro () {
+    for (let i = 0; i < this.table.length; i++) {
+      if (this.table[i] != undefined) {
+        const bucket = this.table[i]
+        bucket.forEach(item => {
+          console.log(`${item[0]}:`, item[1])
+        })
+      }
+    }
+  }
+
+  hashing (string) {
+    const H = 37;
     let total = 0;
     for (let i = 0; i < string.length; i++) {
       total += H * total + string.charCodeAt(i);
     }
     total = total % this.table.length;
     if (total < 0) {
-      total += this.table.length-1;
+      total += this.table.length - 1;
     }
     return Math.round(total);
   }
-
-  showDistro () {
-    let n = 0;
-    for (let i = 0; i < this.table.length; i++) {
-      if (this.table[i] != undefined) {
-        console.log(i + ": " + this.table[i]);
-      }
-    }
-  }
 }
 
+// 判断是否质数
+function _isPrime (num) {
+  if (num <= 1) {
+    return false
+  }
+  for(var i = 2; i<= Math.sqrt(num); i++ ){
+    if(num % i == 0){
+      return false;
+    }
+  }
+  return true;
+}
+
+
+function _getPrime (num) {
+  while (!_isPrime(num)) {
+    num++
+  }
+  return num
+}
