@@ -136,7 +136,7 @@ class HashTable {
 
       for (let j = 0; j < bucket.length; j++) {
         const item = bucket[j];
-        this.put(item[0], item[1])//插入数据的key和value
+        this.put(item[0], item[1]) // 插入数据的key和value
       }
     }
   }
@@ -162,3 +162,5 @@ function _getPrime (num) {
   }
   return num
 }
+
+module.exports = HashTable
