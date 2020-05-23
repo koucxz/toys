@@ -22,9 +22,9 @@
 算法练习
 
   - [x] sort
-  - [ ] stack
-  - [ ] queue
-  - [ ] linked list
-  - [ ] hash table
+  - [x] stack
+  - [x] queue
+  - [x] linked list
+  - [x] hash table
   - [ ] tree
   - [ ] graph
