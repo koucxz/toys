@@ -1,6 +1,5 @@
 class BinaryTree {
   root = null;
-  count = 0;
 
   static Node = class Node {
     data = null;
@@ -18,7 +17,7 @@ class BinaryTree {
   insert(data) {
     const node = new BinaryTree.Node(data);
     if (this.root === null) {
-      return (this.root = node);
+      return this.root = node;
     }
 
     let current = this.root;
@@ -78,7 +77,7 @@ class BinaryTree {
     return current.data;
   }
 
-  find(data) {
+  find (data) {
     let current = this.root;
     while (current !== null) {
       if (data === current.data) {
